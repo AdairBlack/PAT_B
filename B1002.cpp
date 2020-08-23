@@ -1,26 +1,34 @@
+// PatTest.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+#pragma warning(disable:4996)
 #include <cstdio>
 #include <cstring>
 
-char change[10][5] = {"ling", "yi", "er", "san", "si", "wu", "liu", "qi", "ba", "jiu"};
+int main()
+{
+	char table[10][10] = { "ling", "yi", "er", "san", "si", "wu", "liu", "qi", "ba", "jiu" };
+	char a[110] = { 0 }, ans[10][10] = { 0 };
+	int sum = 0, count = 0;
+	scanf("%s", a);
+	int length = strlen(a);
 
-int main(){
-    int sum = 0;
-    char str[110];
-    char ans[5][5];
-    scanf("%s", str);
-    int len = strlen(str);
-    for(int i = 0; i < len; i++){
-        sum += str[i] - '0';
-    }
-    int count = 0;
-    while(sum != 0){
-        strcpy(ans[count],change[sum % 10]);
-        sum = sum / 10;
-        count++;
-    }
-    for(int i = count - 1; i > 0; i--){
-        printf("%s ", ans[i]);
-    }
-    printf("%s\n", ans[0]);
-    return 0;
+	for (int i = 0; i < length; i++) {
+		sum += a[i] - '0';
+	}
+
+	while (0 != sum) {
+		strcpy(ans[count], table[sum % 10]);
+		sum /= 10;
+		count++;
+	}
+
+	for (int i = count - 1; i >= 0; i--) {
+		if (0 != i) {
+			printf("%s ", ans[i]);
+		}
+		else {
+			printf("%s\n", ans[0]);
+		}
+	}
+	return 0;
 }
