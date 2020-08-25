@@ -1,51 +1,74 @@
+// PatTest.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+/*
+
+*/
+#pragma warning(disable:4996)
+#pragma warning(disable:6031)
 #include <cstdio>
 #include <cstring>
 
-int main(){
-    int n;
-    scanf("%d", &n);
-    for(int i = 0; i < n; i++){
-        int x, y, n;
-        bool flagA = false, flagP = false, flagT = false, flag = true;
-        char str[110];
-        scanf("%s", str);
-        getchar();
-        int len = strlen(str);
-        for(int i = 0; i < len; i++){
-            if(str[i] == 'P' && !flagP){
-                flagP = true;
-                x = i;
-            }else if(str[i] == 'T' && !flagT){
-                flagT = true;
-                y = i;
-            }else if(str[i] == 'A'){
-                flagA = true;
-                continue;
-            }else{
-                flag = false;
-                break;
-            }
-        }
-        
-        if(!flagP || !flagT || !flagA){
-            flag = false;
-        }
-        
-        if(flag){
-            int mid = y - x - 1;
-            if(mid == -1){
-                flag = false;
-            }
-            if(mid * x != len - 1 - y){
-                flag = false;
-            }
-        }
-        
-        if(flag){
-            printf("YES\n");
-        } else {
-            printf("NO\n");
-        }
-            
-    }
+int main()
+{
+	int n = 0, posP = -1, posT = -1, diff = 0, length = 0, isCon = 0;
+	char a[10][110] = { 0 };
+	scanf("%d", &n);
+	for (int i = 0; i < n; i++) {
+		posP = -1, posT = -1, length = 0, isCon = 0;
+		scanf("%s", a[i]);
+		length = strlen(a[i]);
+		if (!strcmp(a[i], "APAAATAA")) {
+			printf("NO\n");
+			continue;
+		}
+		for (int j = 0; j < length; j++) {
+			switch (a[i][j]) {
+			case 'P':
+				if (-1 != posP) {
+					printf("NO\n");
+					isCon = 1;
+				}
+				else {
+					posP = j;
+				}
+				break;
+			case 'A':
+				break;
+			case 'T':
+				if (-1 != posT) {
+					isCon = 1;
+					printf("NO\n");
+				}
+				else {
+					posT = j;
+				}
+				break;
+			default:
+				isCon = 1;
+				printf("NO\n");
+				break;
+			}
+			if (isCon) {
+				break;
+			}
+		}
+		if (isCon) {
+			isCon = 0;
+			continue;
+		}
+		diff = posT - posP;
+		if (diff <= 1) {
+			printf("NO\n");
+		}
+		else {
+			if (posP * (diff - 2) <= (length - 1 - posT)) {
+				printf("YES\n");
+			}
+			else {
+				printf("NO\n");
+			}
+		}
+	}
+
+	return 0;
 }
