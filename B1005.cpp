@@ -1,37 +1,47 @@
+#pragma warning(disable:4996)
+#pragma warning(disable:6031)
 #include <cstdio>
+#include <cstring>
 #include <algorithm>
+
 using namespace std;
-bool cmp(int a, int b){
-    return a > b;
+
+int main()
+{
+	int b[110] = { 0 };
+	int k = 0;
+	int a[110] = { 0 };
+	int first = 0;
+	scanf("%d", &k);
+	for (int i = 0; i < k; i++) {
+		int temp;
+		scanf("%d", &a[i]);
+		temp = a[i];
+		while (temp != 1) {
+			if (0 == temp % 2) {
+				temp = temp / 2;
+			}
+			else {
+				temp = (temp * 3 + 1) / 2;
+			}
+			if (temp < 110) {
+				b[temp] = 1;
+			}
+		}
+	}
+	sort(a, a + k);
+	for (int i = k - 1; i >= 0; i--) {
+		if (0 == b[a[i]]) {
+			if (0 == first) {
+				first = 1;
+				printf("%d", a[i]);
+			}
+			else {
+				printf(" %d", a[i]);
+			}
+		}
+	}
+
+	return 0;
 }
 
-int main(){
-    int n;
-    int num[110];
-    bool flag[110] = {false};
-    scanf("%d", &n);
-    for(int i = 0; i < n; i++){
-        scanf("%d", &num[i]);
-    }
-    for(int i = 0; i < n; i++){
-        int t = num[i];
-        while(t != 1){
-            if(t % 2 == 0) t /= 2;
-            else t = (3 * t + 1) / 2;
-            if(t <= 110) flag[t] = true;
-        }
-    }
-    int count = 0;
-    int ans[110];
-    for(int i = 0; i < n; i++){
-        if(!flag[num[i]]){
-            ans[count++] = num[i];
-        }
-    }
-    sort(ans, ans + count, cmp);
-    for(int i = 0; i < count - 1; i++){
-        printf("%d ", ans[i]);
-    }
-    printf("%d\n", ans[count - 1]);
-    return 0;
-}
